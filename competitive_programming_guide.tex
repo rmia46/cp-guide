@@ -1,0 +1,997 @@
+\documentclass[12pt, a4paper]{report}
+
+% ========================================== 
+% Preamble
+% ========================================== 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{setspace}
+
+% ========================================== 
+% Formatting & Style Definitions
+% ========================================== 
+
+% Colors
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{niceblue}{RGB}{0, 102, 204}
+
+% Code Listing Style
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+% Hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=niceblue,
+    filecolor=magenta,      
+    urlcolor=niceblue,
+    pdftitle={Competitive Programming Guide},
+    pdfauthor={Roman Mia}
+}
+
+% "Think About It" Box
+\newtcolorbox{thinkbox}[1][]{
+  colback=blue!5!white,
+  colframe=niceblue,
+  title=\textbf{🤔 Think About It},
+  #1
+}
+
+% "Hint" Box
+\newtcolorbox{hintbox}[1][]{
+  colback=yellow!10!white,
+  colframe=orange!80!black,
+  title=\textbf{💡 Mentor's Hint},
+  #1
+}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\slshape \leftmark}
+\fancyhead[R]{\thepage}
+\setlength{\headheight}{15pt}
+
+% Title Formatting
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{niceblue}}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+% ========================================== 
+% Document Information
+% ========================================== 
+\title{\textbf{The Friendly Guide to Competitive Programming}\\
+\large From Syntax to Algorithms: A Mentor's Approach}
+\author{\textbf{Roman Mia}\\
+North South University\\
+\textit{Co-authored by Gemini AI}}
+\date{December 30, 2025}
+
+% ==========================================
+% Content
+% ==========================================
+\begin{document}
+
+\maketitle
+
+% ------------------------------------------
+% Preface
+% ------------------------------------------
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+Welcome, friend!
+
+If you are reading this, you probably want to dive into the world of Competitive Programming (CP). Maybe you've heard it's the best way to ace technical interviews, or maybe you just love the thrill of solving puzzles. Whatever your reason, I'm glad you're here.
+
+\section*{Why this book?}
+I wrote this guide because most textbooks are... well, boring. They throw complex mathematical notations at you before you even understand \textit{why} we need them. Here, we are going to do things differently.
+
+Think of me not as a professor lecturing from a podium, but as a senior student or a mentor sitting right next to you in the computer lab. We will tackle problems together. When we hit a wall, we'll stop and think. I won't just give you the code; I'll help you build the intuition to write it yourself.
+
+\section*{How to use this guide}
+You will see boxes labeled \textbf{Think About It}. When you see those, stop reading! seriously. Close your eyes (well, keep one open to read the question) and try to simulate the problem in your head. 
+
+For example, if I ask you to find a book in a disorganized library, don't just wait for me to tell you about linear search. Imagine the frustration of checking every single book. That frustration? That's the seed of a better algorithm.
+
+Ready? Let's start this journey.
+
+\tableofcontents
+
+% ==========================================
+% PART I: THE FOUNDATION
+% ==========================================
+\part{The Foundation}
+
+\chapter{Welcome to the Arena}
+Before we write a single line of code, let's understand the landscape.
+
+\section{What is Competitive Programming?}
+Imagine a gym, but for your brain. In Competitive Programming, you are given a problem statement, and you need to write a program that solves it within a specific time and memory limit.
+
+\section{Setting Up Your Environment}
+You don't need a supercomputer, but a comfortable setup is crucial.
+
+\subsection{IDE Recommendations}
+\begin{itemize}
+    \item \textbf{VS Code (Windows/Linux/Mac):} The gold standard today. Lightweight, supports extensions.
+    \begin{itemize}
+        \item \textit{Setup:} Install the "C/C++" extension by Microsoft. On Windows, you'll need to install MinGW (GCC) separately and add it to your PATH.
+    \end{itemize}
+    \item \textbf{Sublime Text:} Extremely fast and minimalist. Great if you prefer a distraction-free environment. You will need to configure a "Build System" to compile C++ with a shortcut.
+    \item \textbf{Code::Blocks:} Old school, but works out of the box on Windows without complex configuration.
+\end{itemize}
+
+\begin{hintbox}
+\textbf{Windows Users:} I highly recommend researching "How to set up MinGW and VS Code for C++". It's a one-time pain that pays off forever.
+\end{hintbox}
+
+\section{The Path to Mastery}
+Before we start, here is some hard-earned wisdom.
+
+\subsection{Avoid Tutorial Hell}
+Watching 10 hours of videos won't make you a coder, just like watching football won't make you Messi. You must write code. If you struggle, that's good. The struggle is where the learning happens.
+
+\subsection{Using AI Responsibly}
+AI (like Gemini or ChatGPT) is a powerful tool, but don't let it solve the problem for you.
+\begin{itemize}
+    \item \textbf{Bad:} "Gemini, solve this Codeforces problem for me."
+    \item \textbf{Good:} "Gemini, I'm getting TLE on this problem. Can you give me a hint about the time complexity required?" or "Explain this specific part of the algorithm."
+\end{itemize}
+
+\subsection{Resources}
+\begin{itemize}
+    \item \textbf{USACO Guide:} An incredible, curated roadmap.
+    \item \textbf{CSES Handbook:} Concise and clear explanations of standard algorithms.
+    \item \textbf{Blogs > Videos:} Reading allows you to skim what you know and focus on what you don't. It actively engages your brain more than passively watching a video.
+\end{itemize}
+
+\subsection{Contests \& Upsolving}
+Participate in live contests on Codeforces or AtCoder. You will panic. You will fail to solve simple problems. \textbf{That is okay.}
+The most important step comes \textit{after} the contest: \textbf{Upsolving}.
+If you solved A and B during the contest, try to solve C immediately after. Read the editorial, understand the solution, and write it yourself. This is how you grow.
+
+\section{Verdicts: What is the Judge saying?}
+When you submit code to an online judge (like Codeforces or LeetCode), it runs your code against hidden test cases. Here is what the results mean:
+\begin{itemize}
+    \item \textbf{AC (Accepted):} Celebration time! Your logic is correct.
+    \item \textbf{WA (Wrong Answer):} Your logic failed on at least one test case. Maybe you missed a corner case?
+    \item \textbf{TLE (Time Limit Exceeded):} Your logic is correct, but too slow. We need a better algorithm.
+    \item \textbf{RE (Runtime Error):} Your code crashed. Did you divide by zero? Access an invalid array index?
+\end{itemize}
+
+\chapter{C++ Basics & Fundamentals}
+Let's brush up on our C++. Even if you know the syntax, competitive programming requires a specific style—fast, concise, and safe.
+
+\section{The Skeleton}
+Every C++ CP solution usually looks like this:
+
+\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h> // Includes almost everything we need
+using namespace std;
+
+int main() {
+    // Optimizes I/O operations for speed
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    // Your solution goes here
+    cout << "Hello, World!" << endl;
+    return 0;
+}
+\end{lstlisting}
+
+\begin{hintbox}
+\textbf{Why \texttt{bits/stdc++.h}?}
+In software engineering, including unused libraries is bad practice (bloat). In CP, speed of coding is key. This single header includes \texttt{vector}, \texttt{algorithm}, \texttt{string}, \texttt{iostream}, and almost everything else you'll need. It saves you from typing 20 different \texttt{\#include} lines.
+\end{hintbox}
+
+\section{Fast I/O: The Speed Boost}
+You might see \texttt{ios::sync\_with\_stdio(0); cin.tie(0);} in every top coder's submission. Why?
+
+By default, C++ streams (\texttt{cin}/\texttt{cout}) are synchronized with C standards (\texttt{scanf}/\texttt{printf}) to allow mixing them. This synchronization costs time.
+\begin{itemize}
+    \item \texttt{sync\_with\_stdio(0)} disables this synchronization.
+    \item \texttt{cin.tie(0)} unties the input buffer from the output buffer. Normally, \texttt{cin} flushes \texttt{cout} before asking for input (so you see the prompt). In CP, we don't care about prompts; we just want raw speed.
+\end{itemize}
+
+\section{Data Types, Overflow & Precision}
+This is the silent killer. 
+
+\subsection{Integer Overflow}
+\begin{thinkbox}
+If you add $2$ billion and $2$ billion in a standard \texttt{int} variable, what happens?
+\end{thinkbox}
+
+A standard 32-bit signed \texttt{int} can hold values up to approx $2 \times 10^9$. If your answer exceeds this, it wraps around to a negative number (Overflow). 
+
+\textbf{The Rule:} Look at the constraints.
+\begin{itemize}
+    \item If $N \le 10^9$, \texttt{int} is safe.
+    \item If $N \le 10^{18}$, you MUST use \texttt{long long}.
+\end{itemize}
+
+\subsection{Precision Errors}
+Floating point numbers (\texttt{float}, \texttt{double}) are not exact. They are approximations.
+\[ 1.0 / 3.0 \times 3.0 \text{ might be } 0.999999999 \text{ instead of } 1.0 \]
+
+\textbf{The Fix:}
+\begin{itemize}
+    \item Avoid \texttt{float}; always use \texttt{double} or \texttt{long double}.
+    \item When comparing two doubles $a$ and $b$, don't use \texttt{a == b}. Use $|a - b| < \epsilon$, where $\epsilon$ is a tiny number like $10^{-9}$.
+\end{itemize}
+
+\section{Strings and Arrays}
+\subsection{0-Based Indexing}
+In the world of CP, everything starts at 0. The first element is at index 0, the $n$-th element is at index $n-1$.
+\begin{lstlisting}[language=C++]
+string s = "code";
+// s[0] is 'c', s[3] is 'e'
+\end{lstlisting}
+
+\subsection{Global vs Local Arrays}
+\begin{itemize}
+    \item \textbf{Local Arrays (inside main):} Stored on the Stack. Limited size (usually around $10^5$ elements).
+    \item \textbf{Global Arrays (outside main):} Stored in the Data Segment. Can be much larger (up to $10^7$ or $10^8$ elements).
+\end{itemize}
+\textit{Mentor's Advice:} If you need a large array, declare it globally!
+
+\section{Functions: Pass by Value vs Reference}
+This is where many beginners get Time Limit Exceeded (TLE) without knowing why.
+
+\begin{lstlisting}[language=C++]
+// BAD: Passes a COPY of the vector. O(N) time.
+void process(vector<int> v) { ... }
+
+// GOOD: Passes a REFERENCE (address). O(1) time.
+void process(vector<int> &v) { ... }
+\end{lstlisting}
+
+When you pass a large container (like a vector or string) to a function, C++ creates a full copy of it by default. If you do this inside a loop, your code becomes painfully slow. \section{Loops and Jump Statements}
+You know \texttt{for} and \texttt{while}. But mastering \textbf{jumps} makes complex logic cleaner.
+\begin{itemize}
+    \item \texttt{break}: "Get me out of here!" Exits the current loop immediately.
+    \item \texttt{continue}: "Skip this one." Jumps to the next iteration.
+\end{itemize}
+
+\section{Practice Problems}
+\begin{itemize}
+    \item \href{https://codeforces.com/problemset/problem/4/A}{Watermelon (Codeforces 4A)} - Basic logic (Modulus).
+    \item \href{https://codeforces.com/problemset/problem/71/A}{Way Too Long Words (Codeforces 71A)} - String manipulation.
+    \item \href{https://codeforces.com/problemset/problem/1/A}{Theatre Square (Codeforces 1A)} - \textbf{Important:} Teaches you about \texttt{long long} and ceiling division.
+\end{itemize}
+
+\chapter{Analyzing Efficiency: Time \& Space Complexity}
+
+\section{The 1-Second Rule}
+In most contests, the time limit for a problem is \textbf{1 second}.
+Modern judges can process roughly $10^8$ (100 million) operations per second.
+
+\begin{thinkbox}
+How do you know if your algorithm is fast enough before writing code?
+\end{thinkbox}
+
+Look at the input size constraints ($N$):
+\begin{itemize}
+    \item $N \le 10$: $O(N!)$ or $O(2^N)$ is acceptable.
+    \item $N \le 20$: $O(2^N)$ is okay.
+    \item $N \le 1000$: $O(N^2)$ is okay ($1000^2 = 10^6 < 10^8$).
+    \item $N \le 10^5$: $O(N \log N)$ or $O(N)$ is required. ($10^5 \times \log_2(10^5) \approx 1.7 \times 10^6$).
+    \item $N \le 10^8$: $O(N)$ is required.
+    \item $N > 10^8$: You need $O(\log N)$ or $O(1)$.
+\end{itemize}
+
+\section{The Library Analogy}
+Imagine a library with 1,000,000 unsorted books. If I ask you to find "Harry Potter", you might have to check every single book. In the worst case, it's the last one you check. This is $O(N)$ complexity.
+
+Now, imagine the books are sorted alphabetically. You pick the middle book. If it's "M", you know "H" is in the left half. You just threw away 500,000 books in one check! That's the power of $O(\log N)$.
+
+\section{Space Complexity}
+Time isn't the only resource. You have limited memory (usually 256MB).
+\begin{itemize}
+    \item An integer takes 4 bytes.
+    \item An array of $10^7$ integers takes $40$ MB. Safe.
+    \item An array of $10^8$ integers takes $400$ MB. \textbf{Memory Limit Exceeded (MLE)!}
+\end{itemize}
+
+\section{Practice Problems}
+\begin{itemize}
+    \item \href{https://codeforces.com/problemset/problem/486/A}{Calculating Function (Codeforces 486A)} - Solve in $O(1)$, not $O(N)$.
+    \item \href{https://codeforces.com/problemset/problem/231/A}{Team (Codeforces 231A)} - Simple counting.
+\end{itemize}
+
+\chapter{The Standard Template Library (STL)}
+Don't reinvent the wheel. C++ has a treasure trove of tools called the STL. It's not just a library; it's a way of life in CP.
+
+\section{Vectors: Arrays on Steroids}
+Standard arrays are rigid. You define size 100, and you can't put 101 elements. Vectors are dynamic.
+\begin{lstlisting}[language=C++]
+vector<int> v; 
+v.push_back(5); // Adds 5 to the end
+v.push_back(10);
+cout << v.size(); // Output: 2
+\end{lstlisting}
+They handle memory management for you. Need a 2D array?
+\texttt{vector<vector<int>> matrix;}
+
+\section{Pairs}
+Sometimes you need to keep two things together, like a coordinate $(x, y)$.
+\begin{lstlisting}[language=C++]
+pair<int, int> p = {1, 2};
+cout << p.first << " " << p.second;
+\end{lstlisting}
+
+\section{Iterators and Range-based Loops}
+Gone are the days of \texttt{for(int i=0; i<n; i++)} for everything.
+\begin{lstlisting}[language=C++]
+for(int x : v) { // Read as "for every element x in v"
+    cout << x << " ";
+}
+\end{lstlisting}
+\textbf{Auto:} Let the compiler guess the type. \texttt{auto x = 5} makes \texttt{x} an int.
+
+\section{Maps \& Sets: The Power of Order}
+\subsection{Sets}
+A \texttt{set} keeps elements \textbf{sorted} and \textbf{unique}.
+\begin{lstlisting}[language=C++]
+set<int> s;
+s.insert(5);
+s.insert(1);
+s.insert(5); // Ignored, already exists
+// s contains {1, 5}
+\end{lstlisting}
+Operations like insertion and search take $O(\log N)$ because it's built on a specialized tree (Red-Black Tree).
+
+\subsection{Maps}
+A \texttt{map} is a key-value store, like a dictionary.
+\begin{lstlisting}[language=C++]
+map<string, int> m;
+m["apple"] = 5;
+m["banana"] = 10;
+\end{lstlisting}
+Also $O(\log N)$. If you don't care about order and want speed ($O(1)$), use \texttt{unordered\_map}. But beware: in worst cases (collisions), it can degrade to $O(N)$.
+
+\section{Sorting \& Comparators}
+Sorting is $O(N \log N)$.
+\begin{lstlisting}[language=C++]
+sort(v.begin(), v.end()); // Ascending
+sort(v.rbegin(), v.rend()); // Descending
+\end{lstlisting}
+
+\textbf{Custom Comparator:} What if you want to sort pairs based on the second element?
+\begin{lstlisting}[language=C++]
+vector<pair<int, int>> v = {{1, 5}, {2, 3}};
+sort(v.begin(), v.end(), [](pair<int,int> a, pair<int,int> b) {
+    return a.second < b.second; // Sort by second element
+});
+\end{lstlisting}
+
+\section{Binary Search Functions}
+Don't write binary search from scratch if you just need to find a position.
+\begin{itemize}
+    \item \texttt{lower\_bound}: First element $\ge$ value.
+    \item \texttt{upper\_bound}: First element $>$ value.
+\end{itemize}
+
+\subsection{Multiset}
+A normal \texttt{set} removes duplicates. A \texttt{multiset} keeps them.
+\begin{lstlisting}[language=C++]
+multiset<int> ms;
+ms.insert(5);
+ms.insert(5); // ms = {5, 5}
+\end{lstlisting}
+Great for finding the median or keeping a sorted stream of numbers.
+
+\section{Lambda Functions}
+Write small functions on the fly. Extremely useful for custom sorting.
+\begin{lstlisting}[language=C++]
+// Sort descending using a lambda
+sort(v.begin(), v.end(), [](int a, int b) {
+    return a > b; 
+});
+\end{lstlisting}
+
+\section{Practice Problems}
+\begin{itemize}
+    \item \href{https://codeforces.com/problemset/problem/4/C}{Registration System (Codeforces 4C)} - Good use of \texttt{map}.
+    \item \href{https://codeforces.com/problemset/problem/236/A}{Boy or Girl (Codeforces 236A)} - Counting unique characters with \texttt{set}.
+    \item \href{https://codeforces.com/problemset/problem/525/A}{Vitaliy and Pie (Codeforces 525A)} - Hashing/Maps.
+\end{itemize}
+
+% ==========================================
+% PART II: THE MATH & LOGIC
+% ==========================================
+\part{The Math \& Logic}
+
+\chapter{Number Theory}
+Mathematics is the queen of sciences, and in CP, it's your best friend.
+
+\section{Modular Arithmetic: The Clock of Integers}
+\section{The Intuition}
+Imagine a clock. It has numbers 1 to 12.
+If it is 10 o'clock, and I add 5 hours, it becomes 3 o'clock. Not 15.
+\[ (10 + 5) \% 12 = 3 \]
+Modular arithmetic is just "Clock Math". We wrap numbers around a fixed limit $M$.
+
+\section{Why do we use it?}
+\begin{thinkbox}
+Calculate $100!$ (Factorial 100).
+\end{thinkbox}
+This number is larger than the number of atoms in the known universe. No computer variable (\texttt{int} or \texttt{long long}) can hold it.
+But often, we don't need the exact number. We just need to know properties of the number, or we are asked to "Print the answer modulo $10^9+7$".
+This allows us to work with infinite-sized numbers using finite memory.
+
+\section{When to spot it?}
+\begin{itemize}
+    \item "Find the number of ways..." (Combinatorics often produces huge answers).
+    \item Constraints say: "Output the answer modulo $10^9+7$".
+    \item Cryptography problems.
+\end{itemize}
+
+\section{The Golden Rules}
+We can perform operations at every step to keep numbers small.
+\begin{enumerate}
+    \item \textbf{Addition:} $(a + b) \% m = ((a \% m) + (b \% m)) \% m$
+    \item \textbf{Multiplication:} $(a \times b) \% m = ((a \% m) \times (b \% m)) \% m$
+    \item \textbf{Subtraction:} $(a - b) \% m \rightarrow$ \textbf{Danger!} In C++, $-5 \% 12$ might give $-5$. We want $7$.
+    \textbf{Fix:} \texttt{((a - b) \% m + m) \% m}
+    \item \textbf{Division:} $(a / b) \% m \rightarrow$ \textbf{Never do this!} Division requires the \textit{Modular Inverse} (explained later).
+\end{enumerate}
+
+\section{GCD \& LCM}
+Greatest Common Divisor. Don't loop to find it. Use Euclid's Algorithm.
+In C++, it's built-in: \texttt{\_\_gcd(a, b)}.
+\[ LCM(a, b) = \frac{a \times b}{GCD(a, b)} \]
+
+\section{Prime Numbers & Sieve}
+Checking if $N$ is prime takes $O(\sqrt{N})$.
+But what if you need to check primality for numbers up to $10^6$ many times?
+\textbf{Sieve of Eratosthenes:}
+1. List numbers $2$ to $N$.
+2. Circle 2, cross out all multiples of 2.
+3. Circle next available number (3), cross out multiples.
+4. Repeat.
+This pre-computes primes in $O(N \log (\log N))$.
+
+\begin{lstlisting}[language=C++]
+vector<bool> is_prime(N+1, true);
+is_prime[0] = is_prime[1] = false;
+for (int i = 2; i*i <= N; i++) {
+    if (is_prime[i]) {
+        for (int j = i*i; j <= N; j += i)
+            is_prime[j] = false;
+    }
+}
+\end{lstlisting}
+
+\section{Binary Exponentiation}
+How do you calculate $a^b$ when $b = 10^{18}$? A loop is too slow ($O(N)$).
+We use the fact that $a^{100} = (a^{50})^2$. We can halve the power at each step.
+\begin{lstlisting}[language=C++]
+long long power(long long base, long long exp) {
+    long long res = 1;
+    base %= 1000000007;
+    while (exp > 0) {
+        if (exp % 2 == 1) res = (res * base) % 1000000007;
+        base = (base * base) % 1000000007;
+        exp /= 2;
+    }
+    return res;
+}
+\end{lstlisting}
+Complexity: $O(\log b)$.
+
+\section{Modular Inverse}
+Division doesn't exist in modular arithmetic. We cannot do $(a / b) \% m$.
+Instead, we multiply by the \textbf{Modular Inverse} of $b$: $(a \times b^{-1}) \% m$.
+If $m$ is prime, Fermat's Little Theorem says:
+\[ b^{m-2} \equiv b^{-1} \pmod m \]
+So, just calculate \texttt{power(b, m-2)}.
+
+\section{Practice Problems}
+\begin{itemize}
+    \item \href{https://codeforces.com/problemset/problem/230/B}{T-primes (Codeforces 230B)} - Sieve + Perfect Squares.
+    \item \href{https://codeforces.com/problemset/problem/472/A}{Design Tutorial: Learn from Math (Codeforces 472A)} - Composite numbers.
+    \item \href{https://codeforces.com/problemset/problem/749/A}{Bachgold Problem (Codeforces 749A)} - Constructive/Primes.
+\end{itemize}
+
+\chapter{Bit Manipulation}
+\section{The Intuition: The Control Panel}
+Imagine you are in a room with a row of 32 light switches on the wall. Each switch can be either \textbf{ON} (1) or \textbf{OFF} (0).
+\begin{itemize}
+    \item You could walk over and flip them one by one. (Looping through an array).
+    \item OR, you could have a "Master Switch" that flips specific patterns of them instantly.
+\end{itemize}
+
+That "Master Switch" is Bit Manipulation. In C++, an \texttt{int} isn't just a number; it's a row of 32 switches. We can manipulate all of them in a single operation. This is blindingly fast.
+
+\section{Why do we need this?}
+\begin{thinkbox}
+Problem: You have 20 different toppings for a pizza. A customer can choose any combination. How do you store their order?
+\end{thinkbox}
+You could make a \texttt{vector<string> order = \{"Pepperoni", "Mushrooms"\}}. That works, but comparing two orders is slow ($O(N)$).
+\textbf{The Bitwise Way:} Assign each topping a bit position.
+\begin{itemize}
+    \item Pepperoni = 0th bit ($2^0 = 1$)
+    \item Mushrooms = 1st bit ($2^1 = 2$)
+    \item Cheese = 2nd bit ($2^2 = 4$)
+\end{itemize}
+An order of "Pepperoni + Cheese" is just the number $1 + 4 = 5$ (Binary \texttt{101}).
+Now, comparing orders is just comparing two integers ($O(1)$). Storing a subset in a single integer is called \textbf{Bit Masking}.
+
+\section{How to spot a Bit Manipulation problem?}
+\begin{itemize}
+    \item \textbf{Small Constraints:} $N \le 20$ (Since $2^{20} \approx 10^6$, which fits in time limits).
+    \item \textbf{Keywords:} "Subsets", "XOR", "Odd occurrences".
+\end{itemize}
+
+\section{The Magic of XOR}
+The Exclusive OR (\texttt{\^}) is the "Difference Detector".
+\begin{itemize}
+    \item $0 \oplus 0 = 0$ (Same)
+    \item $1 \oplus 1 = 0$ (Same)
+    \item $1 \oplus 0 = 1$ (Different)
+\end{itemize}
+It has a superpower: \textbf{Self-Cancellation}. $A \oplus A = 0$.
+\begin{hintbox}
+If you have a pile of socks where every sock has a pair except one, XORing them all together makes the pairs vanish ($Sock\_A \oplus Sock\_A = 0$), leaving only the missing one.
+\end{hintbox}
+
+\section{Essential Tricks}
+\begin{itemize}
+    \item \textbf{Check if the $i$-th switch is ON:} \texttt{if (n \& (1 << i))}
+    \item \textbf{Turn the $i$-th switch ON:} \texttt{n | (1 << i)}
+    \item \textbf{Turn the last ON switch OFF:} \texttt{n \& (n - 1)}. (Great for counting how many switches are ON).
+\end{itemize}
+
+\section{Practice Problems}
+\begin{itemize}
+    \item \href{https://codeforces.com/problemset/problem/579/A}{Raising Bacteria (Codeforces 579A)} - Counting set bits.
+    \item \href{https://codeforces.com/problemset/problem/467/B}{Fedor and New Game (Codeforces 467B)} - Bit masks and XOR.
+\end{itemize}
+
+% ==========================================
+% PART III: ESSENTIAL ALGORITHMS
+% ==========================================
+\part{Essential Algorithms}
+
+\chapter{Recursion \& Backtracking}
+\section{The Intuition: The Russian Nesting Doll}
+Have you ever seen those wooden dolls where you open one, and there is a smaller identical doll inside? That is recursion.
+You solve a big problem by opening it to find a smaller version of the \textit{same} problem. You keep doing this until you reach the tiniest doll that cannot be opened (The Base Case).
+
+\section{When to use Recursion?}
+Whenever a problem can be broken down into "decisions".
+\begin{itemize}
+    \item \textbf{Maze:} At this junction, do I go Left, Right, or Straight?
+    \item \textbf{Sudoku:} Should I put a 5 here, or a 6?
+\end{itemize}
+If you make a decision, and it turns out to be wrong, you come back and try the other option. This "coming back" is called \textbf{Backtracking}.
+
+\section{The "Leap of Faith"}
+This is the hardest part for beginners.
+\begin{thinkbox}
+To calculate Factorial(5), you assume you already know Factorial(4). Don't try to visualize the whole chain in your head! You will get a headache. Just trust that the function works for the smaller input.
+\end{thinkbox}
+
+\section{The "Pick or Don't Pick" Pattern}
+This is the most common recursion pattern in CP.
+Imagine you are packing a bag for a trip (generating a subset). For every item, you have exactly two choices:
+1. \textbf{Pick it:} Put it in the bag. Move to the next item.
+2. \textbf{Don't pick it:} Leave it. Move to the next item.
+
+\begin{lstlisting}[language=C++]
+void generateSubsets(int index, vector<int>& subset) {
+    // BASE CASE: No more items to consider
+    if (index == n) {
+        print(subset);
+        return;
+    }
+    
+    // CHOICE 1: Pick the item
+    subset.push_back(arr[index]);
+    generateSubsets(index + 1, subset); // Recurse
+    subset.pop_back(); // BACKTRACK! (Undo the choice to try the other path)
+
+    // CHOICE 2: Don't pick the item
+    generateSubsets(index + 1, subset);
+}
+\end{lstlisting}
+
+\section{Classic Problems}
+\subsection{Merge Sort}
+The ultimate "Divide and Conquer" algorithm.
+1. Divide array in half.
+2. Sort left half (recursively).
+3. Sort right half (recursively).
+4. \textbf{Merge} the two sorted halves.
+
+\subsection{Generate Parentheses}
+Problem: Generate all valid parentheses combinations for $N=3$ (e.g., "((()))", "()(())").
+Strategy: Keep track of \texttt{open} and \texttt{close} counts. Only add ')' if \texttt{close < open}.
+
+\section{Practice Problems}
+\begin{itemize}
+    \item \href{https://cses.fi/problemset/task/1623}{Apple Division (CSES)} - Subset generation with recursion.
+    \item \href{https://cses.fi/problemset/task/1622}{Creating Strings (CSES)} - Generating permutations.
+\end{itemize}
+
+\chapter{Binary Search}
+
+\section{The Intuition: The High-Low Game}
+
+I am thinking of a number between 1 and 100. You have to guess it.
+
+\begin{itemize}
+
+    \item You guess: 50. I say: "Too Low."
+
+    \item You know immediately that numbers 1 to 50 are useless. You just eliminated half the universe!
+
+    \item Next guess: 75. I say: "Too High."
+
+    \item Now you know the answer is between 51 and 74.
+
+\end{itemize}
+
+This is Binary Search. In a sorted range, we can eliminate half the candidates in a single step.
+
+
+
+\section{When can we use it?}
+
+You might think: "Only for sorted arrays."
+
+\textbf{Wrong.} You can use Binary Search on \textit{anything} that has the property of \textbf{Monotonicity}.
+
+
+
+\section{Monotonicity: The Conveyor Belt}
+
+Imagine a factory conveyor belt producing widgets.
+
+\begin{itemize}
+
+    \item The first 50 widgets are \textbf{Good} (Check returns True).
+
+    \item Suddenly, the machine breaks.
+
+    \item The next 50 widgets are \textbf{Defective} (Check returns False).
+
+\end{itemize}
+
+The sequence looks like this: \texttt{T T T T T F F F F F}.
+
+Your job: Find the \textit{first} defective widget.
+
+Because all the T's come before all the F's, this is monotonic. You can Binary Search for the boundary!
+
+
+
+\section{The Implementation}
+
+Here is a template that never fails (prevents infinite loops and overflow):
+
+\begin{lstlisting}[language=C++]
+
+long long low = 0, high = n;
+
+long long ans = -1;
+
+
+
+while (low <= high) {
+
+    long long mid = low + (high - low) / 2;
+
+    if (check(mid)) { // Is this widget Good?
+
+        ans = mid;    // Maybe this is the answer?
+
+        low = mid + 1; // Try to find a later Good one
+
+    } else {
+
+        high = mid - 1; // It's bad, look earlier
+
+    }
+
+}
+
+\end{lstlisting}
+
+
+
+\section{Binary Search on Answer}
+
+This is the most powerful technique in this chapter.
+
+Sometimes a problem asks: "What is the \textit{minimum} time required to print $K$ copies?"
+
+\begin{itemize}
+
+    \item If you can print it in $T$ seconds, can you print it in $T+1$ seconds? Yes.
+
+    \item If you can't print it in $T$ seconds, can you print it in $T-1$ seconds? No.
+
+\end{itemize}
+
+This "No No No Yes Yes Yes" structure means you can Binary Search the \textit{Time} itself!
+
+
+
+\section{Real Number Binary Search}
+
+We can also search for a float answer, like finding the Square Root or N-th Root.
+
+Difference:
+
+1. Use \texttt{double} for low, high, mid.
+
+2. Loop for a fixed number of iterations (e.g., 100) instead of \texttt{while(low <= high)}. 100 iterations gives strictly enough precision.
+
+
+
+\section{Practice Problems}
+
+\begin{itemize}
+
+    \item \href{https://codeforces.com/problemset/problem/670/D2}{Magic Powder (Codeforces 670D2)} - Classic "Binary Search on Answer".
+
+    \item \href{https://codeforces.com/problemset/problem/474/B}{Worms (Codeforces 474B)} - Using \texttt{lower\_bound}.
+
+\end{itemize}
+
+\chapter{Pre-computation Techniques}
+The fastest code is the code you don't run. Pre-computation is about doing the hard work \textit{before} the test cases start.
+
+\section{Prefix Sums}
+Problem: Given an array $A$, calculate the sum of elements from index $L$ to $R$. You have $Q$ queries.
+Naive approach: Loop from $L$ to $R$. Complexity $O(Q \times N)$. Too slow!
+
+\textbf{The Solution:} Build a prefix sum array $P$ where $P[i] = A[0] + \dots + A[i]$.
+\[ P[i] = P[i-1] + A[i] \]
+Now, Sum($L, R$) is simply:
+\[ P[R] - P[L-1] \]
+Complexity: $O(N)$ to build, $O(1)$ per query.
+
+\subsection{2D Prefix Sums}
+What if you have a 2D grid and want the sum of a rectangle from $(r1, c1)$ to $(r2, c2)$?
+We use the Principle of Inclusion-Exclusion.
+\[ Sum = P[r2][c2] - P[r1-1][c2] - P[r2][c1-1] + P[r1-1][c1-1] \]
+\begin{thinkbox}
+Why the plus at the end? Because we subtracted the top-left intersection twice!
+\end{thinkbox}
+
+\section{Hashing (Frequency Arrays)}
+If you need to count how many times number $X$ appears, and $X$ is small ($< 10^7$), use an array.
+\begin{lstlisting}[language=C++]
+int count[100005];
+for(int x : arr) count[x]++;
+\end{lstlisting}
+This is $O(1)$ access, much faster than a \texttt{map}.
+
+\subsection{Handling Negative Numbers}
+Array indices cannot be negative. If your input ranges from $-1000$ to $1000$, use an \textbf{offset}.
+\begin{lstlisting}[language=C++]
+int offset = 1000;
+count[x + offset]++; // -1000 becomes 0
+\end{lstlisting}
+
+\section{Practice Problems}
+\begin{itemize}
+    \item \href{https://codeforces.com/problemset/problem/433/B}{Kuriyama Mirai's Stones (Codeforces 433B)} - Multiple prefix sums.
+    \item \href{https://codeforces.com/problemset/problem/313/B}{Ilya and Queries (Codeforces 313B)} - Prefix sums on properties.
+\end{itemize}
+
+% ==========================================
+% PART IV: ADVANCED TOPICS
+% ==========================================
+\part{Advanced Topics}
+
+\chapter{Graph Theory}
+\section{The Intuition: Cities and Roads}
+A graph is just a fancy name for "Dots connected by Lines".
+\begin{itemize}
+    \item \textbf{Nodes (Vertices):} Cities, intersections, or people.
+    \item \textbf{Edges:} Roads, cables, or friendships.
+\end{itemize}
+\begin{thinkbox}
+If I want to go from City A to City B, is there a path? What is the shortest one?
+\end{thinkbox}
+This is the heart of Graph Theory.
+
+\section{Graph Representation}
+We need to teach the computer about these connections. The best way is the \textbf{Adjacency List}.
+Think of it as a contact list on your phone.
+\begin{itemize}
+    \item \textbf{Roman:} [Alice, Bob]
+    \item \textbf{Alice:} [Roman, Eve]
+\end{itemize}
+
+\begin{lstlisting}[language=C++]
+vector<int> adj[N]; // adj[u] stores the list of neighbors of u
+// Connecting u and v
+adj[u].push_back(v);
+adj[v].push_back(u); // If undirected
+\end{lstlisting}
+
+\section{DFS \& BFS: Two Ways to Explore}
+Imagine you are lost in a maze.
+
+\subsection{Depth First Search (DFS) - The Maze Solver}
+DFS is bold. It picks a path and follows it until it hits a dead end. Then it backtracks to the last junction and tries a different path.
+\begin{lstlisting}[language=C++]
+void dfs(int u, vector<bool>& vis) {
+    vis[u] = true;
+    for (int v : adj[u]) {
+        if (!vis[v]) dfs(v, vis);
+    }
+}
+\end{lstlisting}
+\textbf{Use it for:} Checking if you can reach A from B, finding cycles, or counting connected islands.
+
+\subsection{Breadth First Search (BFS) - The Ripple Effect}
+BFS is cautious. It explores all neighbors at distance 1, then all neighbors at distance 2, and so on. It spreads like a ripple in a pond.
+\textbf{Superpower:} In an unweighted graph (all roads length 1), BFS guarantees the \textbf{Shortest Path}.
+
+\begin{lstlisting}[language=C++]
+queue<int> q;
+q.push(start);
+vis[start] = true;
+dist[start] = 0;
+while (!q.empty()) {
+    int u = q.front(); q.pop();
+    for (int v : adj[u]) {
+        if (!vis[v]) {
+            vis[v] = true;
+            dist[v] = dist[u] + 1;
+            q.push(v);
+        }
+    }
+}
+\end{lstlisting}
+
+\section{Shortest Paths with Weights (Dijkstra)}
+What if some roads are highways (cost 1) and some are mud roads (cost 10)? BFS fails here because it treats all edges equally.
+\textbf{Dijkstra's Algorithm} is smart. Instead of a normal Queue, it uses a \textbf{Priority Queue} to always explore the "cheapest" path found so far.
+
+\section{Trees}
+A Tree is a special graph:
+\begin{itemize}
+    \item Connected and has no cycles.
+    \item Has $N$ nodes and exactly $N-1$ edges.
+    \item There is a unique path between any two nodes.
+\end{itemize}
+\textbf{Diameter:} The longest path between any two nodes in the tree.
+\textbf{LCA (Lowest Common Ancestor):} The deepest node that is an ancestor of both $u$ and $v$.
+
+\section{Floyd-Warshall Algorithm}
+Dijkstra gives shortest paths from \textit{one} source. Floyd-Warshall gives shortest paths between \textbf{all pairs} of nodes.
+It's just 3 nested loops!
+\begin{lstlisting}[language=C++]
+for (int k = 1; k <= n; k++) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+        }
+    }
+}
+\end{lstlisting}
+Complexity: $O(N^3)$. Use for $N \le 400$.
+
+\section{Disjoint Set Union (DSU)}
+Imagine 10 people. Initially, everyone is their own boss.
+\begin{itemize}
+    \item \textbf{Union(A, B):} A becomes B's boss (merging sets).
+    \item \textbf{Find(A):} Who is A's ultimate boss?
+\end{itemize}
+This is efficient for checking connectivity dynamically.
+
+\section{Practice Problems}
+\begin{itemize}
+    \item \href{https://cses.fi/problemset/task/1192}{Counting Rooms (CSES)} - Flood fill / Connected Components.
+    \item \href{https://cses.fi/problemset/task/1667}{Message Route (CSES)} - BFS Shortest Path + path reconstruction.
+    \item \href{https://codeforces.com/problemset/problem/20/C}{Dijkstra? (Codeforces 20C)} - Implementation of Dijkstra.
+\end{itemize}
+
+\chapter{Dynamic Programming}
+\section{The Intuition: Don't Repeat Yourself}
+Dynamic Programming (DP) is a scary name for a simple concept: \textbf{Remembering answers to sub-problems.}
+
+\begin{thinkbox}
+I write "1+1+1+1+1+1+1+1 =" on a piece of paper.
+"What's that equal to?"
+You count and say "8".
+I write another "+1" at the end. "What about now?"
+You instantly say "9".
+\end{thinkbox}
+Why didn't you recount from the start? Because you \textit{remembered} the previous answer was 8. That is DP.
+
+\section{Memoization (Top-Down)}
+Recursion is elegant, but it has short-term memory loss. It re-calculates the same things over and over (like $Fib(3)$ in the Fibonacci tree).
+\textbf{The Fix:} Give it a notepad (an array) to write down answers.
+
+\begin{lstlisting}[language=C++]
+int dp[N]; // Initialize with -1
+int fib(int n) {
+    if (n <= 1) return n;
+    if (dp[n] != -1) return dp[n]; // I've seen this before!
+    return dp[n] = fib(n-1) + fib(n-2); // Remember it for later
+}
+\end{lstlisting}
+This simple trick turns an impossible $O(2^N)$ algorithm into a lightning-fast $O(N)$ one.
+
+\section{The DP State}
+The "State" is just the unique ID of a sub-problem.
+\begin{itemize}
+    \item For Fibonacci, the state is just $n$ (which number we are calculating).
+    \item For a game grid, the state might be $(x, y)$ (where we are standing).
+\end{itemize}
+If you can identify the state and how it relates to previous states (Transitions), you have solved the DP.
+
+\section{Classical Patterns}
+Most DP problems are variations of these three:
+
+\subsection{Longest Increasing Subsequence (LIS)}
+Given an array $[10, 22, 9, 33, 21, 50]$, the LIS is $[10, 22, 33, 50]$ (Length 4).
+\textbf{State:} $dp[i]$ = Length of LIS ending at index $i$.
+Transition: Check all $j < i$ where $arr[j] < arr[i]$.
+
+\subsection{Longest Common Subsequence (LCS)}
+Given strings "ABCDE" and "ACE", the LCS is "ACE".
+\textbf{State:} $dp[i][j]$ = LCS length using prefix $i$ of string A and prefix $j$ of string B.
+\begin{itemize}
+    \item If $A[i] == B[j]$, add 1.
+    \item Else, take max of skipping char from A or skipping char from B.
+\end{itemize}
+
+\subsection{0/1 Knapsack}
+You have a bag with capacity $W$. You have items with weights and values.
+\textbf{Decision:} For each item, either \textbf{Take it} or \textbf{Leave it}.
+\textbf{State:} $dp[index][remaining\_weight]$.
+
+\section{Practice Problems}
+\begin{itemize}
+    \item \href{https://atcoder.jp/contests/dp/tasks/dp_a}{Frog 1 (AtCoder DP Contest)} - Basics of DP.
+    \item \href{https://atcoder.jp/contests/dp/tasks/dp_c}{Vacation (AtCoder DP Contest)} - 2D DP.
+    \item \href{https://atcoder.jp/contests/dp/tasks/dp_d}{Knapsack 1 (AtCoder DP Contest)} - The classic knapsack.
+\end{itemize}
+
+\chapter*{Final Words}
+This guide is just the map. You have to walk the path.
+Go to Codeforces, AtCoder, or CSES. Solve problems. Get TLE. Fix it. Get WA. Debug it.
+That green \textbf{Accepted} text is waiting for you.
+
+Happy Coding!
+
+\end{document}
