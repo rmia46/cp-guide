@@ -6,7 +6,7 @@ using ll = long long;
 #define YES_NO(v) (cout << (v ? "YES\n" : "NO\n"))
 #define all(x) (x).begin(), (x).end()
 #define sz(x) (int)(x).size()
-#define debug(x) cerr << "\033[1;31m[DEBUG]\033[0m " << #x << " = " << (x) << " (Line: " << __LINE__ << ")" << endl;
+#define debug(x) cerr << "[DEBUG] " << #x << " = " << (x) << " (Line: " << __LINE__ << ")" << endl;
 const int MOD = 1e9 + 7;
 
 void myrtle() {
