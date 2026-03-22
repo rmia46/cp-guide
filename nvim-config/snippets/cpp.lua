@@ -10,7 +10,7 @@ local function mirror(args)
 end
 
 return {
-  -- Simplified Base Template with Debug Macro
+  -- Simplified Base Template with Improved Debug Macro
   s("cp_base", {
     t({"#include <bits/stdc++.h>", "using namespace std;", "using ll = long long;", "", ""}),
     t({"#define FASTIO() ios_base::sync_with_stdio(false); cin.tie(nullptr)", "#define YES_NO(v) (cout << (v ? \"YES\\n\" : \"NO\\n\"))", ""}),
